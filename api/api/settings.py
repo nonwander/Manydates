@@ -70,7 +70,7 @@ WSGI_APPLICATION = 'api.wsgi.application'
 # TODO(NemykinEV, @nonwander): Перенести БД на Postgresql
 DATABASES = {
     'default': {
-        'ENGINE': 'DB_ENGINE',
+        'ENGINE': os.getenv('DB_ENGINE'),
         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
