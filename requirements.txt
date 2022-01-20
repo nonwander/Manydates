@@ -1,5 +1,6 @@
 Django==2.2.19
 django-debug-toolbar==3.2.4
+django-filter==21.1
 djangorestframework==3.13.1
 flake8==4.0.1
 mccabe==0.6.1
