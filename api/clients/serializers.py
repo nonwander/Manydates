@@ -50,5 +50,6 @@ class ClientMatchSerializer(serializers.ModelSerializer):
         person = data.get('person')
         follower = self.context['request'].user
         if follower == person:
-            raise serializers.ValidationError('Вы не можете отметить себя самого.')
+            message = 'Вы не можете отметить себя самого.'
+            raise serializers.ValidationError(message)
         return data
