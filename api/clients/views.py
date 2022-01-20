@@ -9,3 +9,8 @@ from .serializers import ClientSerializer
 class ClientCreate(generics.CreateAPIView):
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
+
+
+class ClientList(generics.ListCreateAPIView):
+    queryset = Client.objects.all()
+    serializer_class = ClientSerializer
