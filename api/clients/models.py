@@ -17,3 +17,24 @@ class Client(AbstractUser):
 
     def __str__(self):
         return self.username
+
+
+class Match(models.Model):
+    follower = models.ForeignKey(
+        Client,
+        on_delete=models.CASCADE,
+        related_name='follower',
+        verbose_name='Поклонник',
+    )
+    person = models.ForeignKey(
+        Client, null=True,
+        on_delete=models.CASCADE,
+        related_name='followed',
+        verbose_name='Персона',
+    )
+
+    class Meta:
+        constraints = [models.UniqueConstraint(
+            fields=['follower', 'person'],
+            name='unique_match'
+        )]
