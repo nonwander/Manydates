@@ -1,9 +1,10 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
 
 from .models import Client
 
 
-class ClientsAdmin(admin.ModelAdmin):
+class ClientsAdmin(UserAdmin):
     list_display = (
         'avatar', 'username', 'password',
         'gender', 'first_name', 'last_name', 'email'
