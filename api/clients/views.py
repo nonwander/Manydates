@@ -13,6 +13,14 @@ from .serializers import ClientSerializer, ClientMatchSerializer
 from .utils import send_mail_notify
 
 
+class MyFilterBackend(DjangoFilterBackend):
+    def get_filterset_kwargs(self, request, queryset, view):
+        kwargs = super().get_filterset_kwargs(request, queryset, view)
+        if hasattr(view, 'get_filterset_kwargs'):
+            kwargs.update(view.get_filterset_kwargs())
+        return kwargs
+
+
 class ClientCreate(generics.CreateAPIView):
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
@@ -23,8 +31,13 @@ class ClientList(generics.ListCreateAPIView):
     queryset = Client.objects.all()
     serializer_class = ClientSerializer
     permission_classes = [IsAuthenticated]
-    filter_backends = [DjangoFilterBackend]
+    filter_backends = [MyFilterBackend]
     filter_class = ClientListFilter
+
+    def get_filterset_kwargs(self):
+        return {
+            'user': self.request.user,
+        }
 
 
 class MatchCreateDelete(APIView):

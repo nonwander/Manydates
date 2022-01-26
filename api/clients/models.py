@@ -14,6 +14,8 @@ class Client(AbstractUser):
     last_name = models.TextField('last_name', max_length=150)
     password = models.TextField('password', max_length=150)
     email = models.EmailField('e-mail', max_length=254, unique=True)
+    latitude = models.FloatField(null=False, blank=False, default=0.0)
+    longitude = models.FloatField(null=False, blank=False, default=0.0)
 
     def __str__(self):
         return self.username
