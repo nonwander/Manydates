@@ -1,6 +1,8 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
+from .utils import get_watermark
+
 
 class Client(AbstractUser):
     CLIENT_GENDER = (
@@ -17,6 +19,11 @@ class Client(AbstractUser):
 
     def __str__(self):
         return self.username
+
+    def save(self, *args, **kwargs):
+        super(Client, self).save(*args, **kwargs)
+        image_path = self.avatar.path
+        get_watermark(image_path)
 
 
 class Match(models.Model):
