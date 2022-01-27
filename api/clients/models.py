@@ -1,7 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
-from .utils import get_watermark
+from .utils import set_watermark_full_filling
 
 
 class Client(AbstractUser):
@@ -22,8 +22,9 @@ class Client(AbstractUser):
 
     def save(self, *args, **kwargs):
         super(Client, self).save(*args, **kwargs)
-        image_path = self.avatar.path
-        get_watermark(image_path)
+        if not self.is_superuser:
+            image_path = self.avatar.path
+            set_watermark_full_filling(image_path)
 
 
 class Match(models.Model):

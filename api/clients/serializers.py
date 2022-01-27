@@ -16,7 +16,7 @@ class ClientSerializer(serializers.ModelSerializer):
 
     class Meta:
         fields = [
-            'email', 'id', 'username', 'first_name', 'password',
+            'id', 'username', 'email', 'first_name', 'password',
             'last_name', 'avatar', 'gender', 'is_match'
         ]
         extra_kwargs = {'password': {'write_only': True}}
