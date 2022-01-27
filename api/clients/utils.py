@@ -42,7 +42,9 @@ def get_clients_within_radius(latitude, longitude):
 
 @receiver(connection_created)
 def extend_sqlite(connection=None, **kwargs):
-    """Функция добавляет используемые функции в sqlite."""
+    """Функция добавляет используемые в вычислениях функции gcd_formula
+    математические функции для sqlite.
+    """
     if connection.vendor == "sqlite":
         cf = connection.connection.create_function
         cf('acos', 1, math.acos)

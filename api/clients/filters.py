@@ -1,7 +1,4 @@
 from django_filters import rest_framework as filters
-from django.db.models.expressions import RawSQL
-from django.db.models import F, FloatField, Func, Value
-
 from .models import Client
 from .utils import get_clients_within_radius
 
@@ -30,6 +27,6 @@ class ClientListFilter(filters.FilterSet):
         func_in_raw = get_clients_within_radius(latitude, longitude)
         queryset = Client.objects.all().annotate(
             distance=func_in_raw
-        ).order_by('distance')
+        ).order_by('distance').exclude(username=self.user)
         queryset = queryset.filter(distance__lt=value)
         return queryset
