@@ -1,24 +1,15 @@
+from django.db.models import Prefetch
 from django.shortcuts import get_object_or_404
-from django_filters.rest_framework import DjangoFilterBackend
-from rest_framework import status
+from rest_framework import generics, status
 from rest_framework.authentication import BasicAuthentication
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework import generics
 
-from .filters import ClientListFilter
+from .filters import ClientListFilter, CustomFilterBackend
 from .models import Client, Match
-from .serializers import ClientSerializer, ClientMatchSerializer
+from .serializers import ClientMatchSerializer, ClientSerializer
 from .utils import send_mail_notify
-
-
-class MyFilterBackend(DjangoFilterBackend):
-    def get_filterset_kwargs(self, request, queryset, view):
-        kwargs = super().get_filterset_kwargs(request, queryset, view)
-        if hasattr(view, 'get_filterset_kwargs'):
-            kwargs.update(view.get_filterset_kwargs())
-        return kwargs
 
 
 class ClientCreate(generics.CreateAPIView):
@@ -28,11 +19,20 @@ class ClientCreate(generics.CreateAPIView):
 
 
 class ClientList(generics.ListCreateAPIView):
-    queryset = Client.objects.all()
     serializer_class = ClientSerializer
     permission_classes = [IsAuthenticated]
-    filter_backends = [MyFilterBackend]
+    filter_backends = [CustomFilterBackend]
     filter_class = ClientListFilter
+
+    def get_queryset(self):
+        user = self.request.user
+        queryset = Client.objects.select_related().all().prefetch_related(
+            Prefetch(
+                'followed', queryset=Match.objects.filter(follower=user.id),
+                to_attr='is_followed'
+            )
+        )
+        return queryset
 
     def get_filterset_kwargs(self):
         return {

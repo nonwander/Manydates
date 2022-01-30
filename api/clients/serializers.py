@@ -1,6 +1,6 @@
 from django.contrib.auth.hashers import make_password
 from rest_framework import serializers
-from rest_framework.validators import UniqueValidator, UniqueTogetherValidator
+from rest_framework.validators import UniqueTogetherValidator, UniqueValidator
 
 from .models import Client, Match
 
@@ -27,8 +27,7 @@ class ClientSerializer(serializers.ModelSerializer):
         request = self.context.get('request')
         if request is None or request.user.is_anonymous:
             return False
-        user = request.user
-        if Match.objects.filter(person=obj, follower=user).exists():
+        if obj.is_followed:
             return True
         return False
 
@@ -38,7 +37,6 @@ class ClientSerializer(serializers.ModelSerializer):
 
 
 class ClientMatchSerializer(serializers.ModelSerializer):
-    queryset = Client.objects.all()
 
     class Meta:
         model = Match

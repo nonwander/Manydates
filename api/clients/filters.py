@@ -1,6 +1,17 @@
+from django.db.models import Prefetch
 from django_filters import rest_framework as filters
-from .models import Client
+
+from .models import Client, Match
 from .utils import get_clients_within_radius
+
+
+class CustomFilterBackend(filters.DjangoFilterBackend):
+
+    def get_filterset_kwargs(self, request, queryset, view):
+        kwargs = super().get_filterset_kwargs(request, queryset, view)
+        if hasattr(view, 'get_filterset_kwargs'):
+            kwargs.update(view.get_filterset_kwargs())
+        return kwargs
 
 
 class ClientListFilter(filters.FilterSet):
@@ -21,12 +32,18 @@ class ClientListFilter(filters.FilterSet):
         fields = ['gender', 'first_name', 'last_name', 'get_in_distance_km']
 
     def filter(self, request, queryset, value):
-        latitude = self.user.latitude
-        longitude = self.user.longitude
+        user = self.user
+        latitude = user.latitude
+        longitude = user.longitude
         value = float(value)
         func_in_raw = get_clients_within_radius(latitude, longitude)
         queryset = Client.objects.all().annotate(
             distance=func_in_raw
-        ).order_by('distance').exclude(username=self.user)
+        ).order_by('distance').exclude(username=user).prefetch_related(
+            Prefetch(
+                'followed', queryset=Match.objects.filter(follower=user.id),
+                to_attr='is_followed'
+            )
+        )
         queryset = queryset.filter(distance__lt=value)
         return queryset

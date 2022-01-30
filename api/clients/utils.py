@@ -1,10 +1,10 @@
+import math
+
 from django.conf import settings
 from django.core.mail import send_mail
-from django.db.models.expressions import RawSQL
-import math
 from django.db.backends.signals import connection_created
+from django.db.models.expressions import RawSQL
 from django.dispatch import receiver
-
 from PIL import Image
 
 
@@ -18,8 +18,32 @@ def send_mail_notify(client_1, client_2):
         'Вы понравились {}! Почта участника: {}').format(
             client_1.get_full_name(), client_1.email
     )
-    send_mail('Тема', message_follower, site_service_email, [client_1.email])
-    send_mail('Тема', message_person, site_service_email, [client_2.email])
+    try:
+        send_mail(
+            'Тема',
+            message_follower, site_service_email,
+            [client_1.email]
+        )
+    except BaseException as err:
+        err_message = f'{client_1.email} - {type(err)}'
+        send_mail(
+            'Ошибка отправки сообщения',
+            err_message, site_service_email,
+            [site_service_email]
+        )
+    try:
+        send_mail(
+            'Тема',
+            message_person, site_service_email,
+            [client_2.email]
+        )
+    except BaseException as err:
+        err_message = f'{client_2.email} - {type(err)}'
+        send_mail(
+            'Ошибка отправки сообщения',
+            err_message, site_service_email,
+            [site_service_email]
+        )
 
 
 def set_watermark_full_filling(input_url):
