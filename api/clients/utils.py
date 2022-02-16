@@ -6,25 +6,27 @@ from django.db.backends.signals import connection_created
 from django.db.models.expressions import RawSQL
 from django.dispatch import receiver
 from PIL import Image
+from smtplib import SMTPException
 
 
 def send_mail_notify(client_1, client_2):
     site_service_email = settings.EMAIL_HOST_USER
     message_follower = (
-        'Вы понравились {}! Почта участника: {}').format(
-            client_2.get_full_name(), client_2.email
+        f'Вы понравились {client_2["username"]}! ' +
+        f'Почта участника: {client_2["email"]}'
     )
     message_person = (
-        'Вы понравились {}! Почта участника: {}').format(
-            client_1.get_full_name(), client_1.email
+        f'Вы понравились {client_1.username}! ' +
+        f'Почта участника: {client_1.email}'
     )
     try:
         send_mail(
-            'Тема',
+            'Взаимная симпатия!',
             message_follower, site_service_email,
-            [client_1.email]
+            [client_1.email],
+            fail_silently=False
         )
-    except BaseException as err:
+    except SMTPException as err:
         err_message = f'{client_1.email} - {type(err)}'
         send_mail(
             'Ошибка отправки сообщения',
@@ -33,12 +35,14 @@ def send_mail_notify(client_1, client_2):
         )
     try:
         send_mail(
-            'Тема',
+            'Взаимная симпатия!',
             message_person, site_service_email,
-            [client_2.email]
+            [client_2['email']],
+            fail_silently=False
         )
-    except BaseException as err:
-        err_message = f'{client_2.email} - {type(err)}'
+    except SMTPException as err:
+        email = client_2['email']
+        err_message = f'{email} - {type(err)}'
         send_mail(
             'Ошибка отправки сообщения',
             err_message, site_service_email,

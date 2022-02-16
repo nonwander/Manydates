@@ -44,29 +44,25 @@ class MatchCreateDelete(APIView):
     authentication_classes = [BasicAuthentication]
     permission_classes = [IsAuthenticated]
 
-    def check_match(self, follower, person):
+    def check_match(self, current_user, person):
         """Метод проверяет наличие взаимных отметок участников
         и в положительном случае вызывает функцию send_mail_notify
         для формирования email-уведомлений обоим участникам.
         """
-        is_user_follower_to_person = Match.objects.filter(
-            person=person, follower=follower
-        ).exists()
         is_person_follower_to_user = Match.objects.filter(
-            person=follower, follower=person
+            person=current_user.id, follower=person['id']
         ).exists()
-        is_match_both_users = (
-            is_user_follower_to_person and is_person_follower_to_user
-        )
-        if is_match_both_users:
-            send_mail_notify(follower, person)
+        if is_person_follower_to_user:
+            send_mail_notify(current_user, person)
 
-    def get(self, request, person_id):
+    def post(self, request, person_id):
         follower = request.user
-        person = get_object_or_404(Client, id=person_id)
+        person = get_object_or_404(Client.objects.select_related().values(
+            'id', 'username', 'email'
+        ), id=person_id)
         data = {
             'follower': follower.id,
-            'person': person_id
+            'person': person['id']
         }
         serializer = ClientMatchSerializer(
             data=data,
