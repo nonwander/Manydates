@@ -1,12 +1,13 @@
 import math
+from smtplib import SMTPException
 
 from django.conf import settings
 from django.core.mail import send_mail
 from django.db.backends.signals import connection_created
 from django.db.models.expressions import RawSQL
 from django.dispatch import receiver
+
 from PIL import Image
-from smtplib import SMTPException
 
 
 def send_mail_notify(client_1, client_2):

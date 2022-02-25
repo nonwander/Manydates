@@ -1,12 +1,15 @@
 [flake8]
 ignore =
     W503,
-    F811
+    W504,
+    F811,
+    F403,
+    F405
 exclude =
     tests/,
     */migrations/,
     venv/,
     env/
 per-file-ignores =
-    */settings.py:E501
+    */settings/*:E501
 max-complexity = 10
