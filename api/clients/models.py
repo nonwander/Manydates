@@ -6,25 +6,31 @@ from .utils import set_watermark_full_filling
 
 class Client(AbstractUser):
     CLIENT_GENDER = (
-        ('М', 'Мужчина'),
-        ('Ж', 'Женщина')
+        ('M', 'Мужчина'),
+        ('F', 'Женщина'),
+        ('U', 'Не указан')
     )
-    avatar = models.ImageField(upload_to="clients/", blank=False, null=True)
-    gender = models.CharField(max_length=1, choices=CLIENT_GENDER)
+    gender = models.CharField(
+        max_length=1,
+        choices=CLIENT_GENDER,
+        blank=True,
+        default='U'
+    )
+    avatar = models.ImageField(upload_to='clients/', blank=True)
     username = models.CharField('client_name', max_length=150, unique=True)
     first_name = models.TextField('first_name', max_length=30)
     last_name = models.TextField('last_name', max_length=150)
-    password = models.TextField('password', max_length=150)
+    password = models.CharField('password', max_length=150)
     email = models.EmailField('e-mail', max_length=254, unique=True)
-    latitude = models.FloatField(null=False, blank=False, default=0.0)
-    longitude = models.FloatField(null=False, blank=False, default=0.0)
+    latitude = models.FloatField(blank=True, default=0.0)
+    longitude = models.FloatField(blank=True, default=0.0)
 
     def __str__(self):
         return self.username
 
     def save(self, *args, **kwargs):
         super(Client, self).save(*args, **kwargs)
-        if not self.is_superuser:
+        if self.avatar:
             image_path = self.avatar.path
             set_watermark_full_filling(image_path)
 
