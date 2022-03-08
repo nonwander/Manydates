@@ -31,7 +31,7 @@ class ClientsAdmin(UserAdmin):
     )
     empty_value_display = "-пусто-"
     fieldsets = (
-        (None, {'fields': ('first_name', 'last_name', 'gender')}),
+        (None, {'fields': ('first_name', 'last_name', 'gender', 'location')}),
     )
     add_fieldsets = (
         (None, {

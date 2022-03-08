@@ -1,4 +1,6 @@
 from django.contrib.auth.models import AbstractUser
+from django.contrib.gis.db.models import PointField
+from django.contrib.gis.geos import Point
 from django.db import models
 
 from .utils import set_watermark_full_filling
@@ -22,8 +24,18 @@ class Client(AbstractUser):
     last_name = models.TextField('last_name', max_length=150)
     password = models.CharField('password', max_length=150)
     email = models.EmailField('e-mail', max_length=254, unique=True)
-    latitude = models.FloatField(blank=True, default=0.0)
-    longitude = models.FloatField(blank=True, default=0.0)
+    location = PointField(
+        geography=True,
+        default=Point(0.0, 0.0)
+    )
+
+    @property
+    def longitude(self):
+        return self.location.x
+
+    @property
+    def latitude(self):
+        return self.location.y
 
     def __str__(self):
         return self.username

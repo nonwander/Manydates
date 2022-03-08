@@ -20,22 +20,3 @@ INSTALLED_APPS += [
     'debug_toolbar',
 ]
 MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware', ]
-
-if DEBUG:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': 'db.sqlite3',
-        }
-    }
-else:
-    DATABASES = {
-        'default': {
-            'ENGINE': env.db('DB_ENGINE'),
-            'NAME': env('DB_NAME'),
-            'USER': env('DB_USER'),
-            'PASSWORD': env('DB_PASSWORD'),
-            'HOST': env('DB_HOST'),
-            'PORT': env('DB_PORT'),
-        }
-    }

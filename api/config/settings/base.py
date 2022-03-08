@@ -13,6 +13,8 @@ THIRD_PARTY_APPS = [
     'rest_framework',
     'django_filters',
     'django_generate_secret_key',
+    'django.contrib.gis',
+    'rest_framework_gis',
 ]
 
 LOCAL_APPS = [
@@ -47,6 +49,17 @@ TEMPLATES = [
         },
     },
 ]
+
+DATABASES = {
+    'default': {
+        'ENGINE': env('DB_ENGINE'),
+        'NAME': env('DB_NAME'),
+        'USER': env('DB_USER'),
+        'PASSWORD': env('DB_PASSWORD'),
+        'HOST': env('DB_HOST'),
+        'PORT': env('DB_PORT'),
+    }
+}
 
 WSGI_APPLICATION = 'config.wsgi.application'
 

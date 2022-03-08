@@ -9,7 +9,8 @@ from rest_framework.views import APIView
 
 from .filters import ClientListFilter, CustomFilterBackend
 from .models import Client, Match
-from .serializers import ClientMatchSerializer, ClientSerializer
+from .serializers import (ClientMatchSerializer, ClientSerializer,
+                          ClientSerializerVer2)
 from .utils import send_mail_notify
 
 
@@ -20,14 +21,13 @@ class ClientCreate(generics.CreateAPIView):
 
 
 class ClientList(generics.ListCreateAPIView):
-    serializer_class = ClientSerializer
     permission_classes = [IsAuthenticated]
     filter_backends = [CustomFilterBackend]
     filter_class = ClientListFilter
 
     def get_queryset(self):
         user = self.request.user
-        queryset = Client.objects.select_related().all().prefetch_related(
+        queryset = Client.objects.prefetch_related(
             Prefetch(
                 'followed', queryset=Match.objects.filter(follower=user.id),
                 to_attr='is_followed'
@@ -39,6 +39,14 @@ class ClientList(generics.ListCreateAPIView):
         return {
             'user': self.request.user,
         }
+
+    def get_serializer_class(self):
+        """Возвращает подходящий сериализатор
+        на основе версии запросов REST API.
+        """
+        if self.request.version == '2.0':
+            return ClientSerializerVer2
+        return ClientSerializer
 
 
 class MatchCreateDelete(APIView):
