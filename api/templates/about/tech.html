@@ -1,0 +1,51 @@
+<!-- /about/technologies -->
+{% extends "base.html" %}
+{% load static %}
+{% block extra_head %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/custom/tech.css' %}">
+{% endblock %}
+{% block title %}Technologies{% endblock %}
+{% block content %}
+<main role="main" class="container">
+  <div class="row">
+    <!-- list of project's technologies -->
+    <div class="col-md-3 col-12 mb-0 mt-2">
+      <div class="card">
+        <div class="card-body">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <div class="h2">
+                Technologies
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="h4 text-muted">
+                Python 3.10<br />Django 4.0<br />DRF 3.13<br />PostgreSQL 13.4<br />Redis 6.2<br />nginx
+                1.20<br />gunicorn 20.1<br />docker 5.0<br />GitHub<br />CSS3<br />HTML5
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- programmer's commandments -->
+    <div class="col-md-9 col-12 mb-0 mt-2">
+      <div class="card-body">
+        <div class="card-text">
+          <img src="{% static 'img/about/about-tech-python_logo.png' %}"
+            style="float: center; width: 100%;"
+            alt="Zen of python">
+          <code>
+            <h4><font color='#ff4800'>&gt;&gt;&gt; </font><font color='#198754'>import </font><font color='#0d6efd'>this</font></h4>
+          </code>
+          <div class="highlight">
+            <pre class="highlight plaintext">
+              {% include 'includes/zen.html' %}
+            </pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}
