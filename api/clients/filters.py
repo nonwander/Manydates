@@ -1,8 +1,8 @@
-from django.db.models import Prefetch
+from django.contrib.gis.measure import Distance
+
 from django_filters import rest_framework as filters
 
-from .models import Client, Match
-from .utils import get_clients_within_radius
+from .models import Client
 
 
 class CustomFilterBackend(filters.DjangoFilterBackend):
@@ -21,7 +21,7 @@ class ClientListFilter(filters.FilterSet):
     )
     first_name = filters.CharFilter(lookup_expr='exact')
     last_name = filters.CharFilter(lookup_expr='exact')
-    get_in_distance_km = filters.NumberFilter(method='filter')
+    get_in_distance_km = filters.NumberFilter(method='geo_filter')
 
     def __init__(self, *args, user, **kwargs):
         super().__init__(*args, **kwargs)
@@ -31,19 +31,13 @@ class ClientListFilter(filters.FilterSet):
         model = Client
         fields = ['gender', 'first_name', 'last_name', 'get_in_distance_km']
 
-    def filter(self, request, queryset, value):
+    def geo_filter(self, queryset, name, value):
         user = self.user
-        latitude = user.latitude
-        longitude = user.longitude
         value = float(value)
-        func_in_raw = get_clients_within_radius(latitude, longitude)
-        queryset = Client.objects.all().annotate(
-            distance=func_in_raw
-        ).order_by('distance').exclude(username=user).prefetch_related(
-            Prefetch(
-                'followed', queryset=Match.objects.filter(follower=user.id),
-                to_attr='is_followed'
+        queryset = queryset.filter(
+            location__distance_lt=(
+                user.location,
+                Distance(m=value)
             )
         )
-        queryset = queryset.filter(distance__lt=value)
         return queryset

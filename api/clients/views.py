@@ -1,5 +1,6 @@
 from django.db.models import Prefetch
 from django.shortcuts import get_object_or_404
+
 from rest_framework import generics, status
 from rest_framework.authentication import BasicAuthentication
 from rest_framework.permissions import AllowAny, IsAuthenticated
@@ -8,7 +9,8 @@ from rest_framework.views import APIView
 
 from .filters import ClientListFilter, CustomFilterBackend
 from .models import Client, Match
-from .serializers import ClientMatchSerializer, ClientSerializer
+from .serializers import (ClientMatchSerializer, ClientSerializer,
+                          ClientSerializerVer2)
 from .utils import send_mail_notify
 
 
@@ -19,14 +21,13 @@ class ClientCreate(generics.CreateAPIView):
 
 
 class ClientList(generics.ListCreateAPIView):
-    serializer_class = ClientSerializer
     permission_classes = [IsAuthenticated]
     filter_backends = [CustomFilterBackend]
     filter_class = ClientListFilter
 
     def get_queryset(self):
         user = self.request.user
-        queryset = Client.objects.select_related().all().prefetch_related(
+        queryset = Client.objects.prefetch_related(
             Prefetch(
                 'followed', queryset=Match.objects.filter(follower=user.id),
                 to_attr='is_followed'
@@ -39,34 +40,38 @@ class ClientList(generics.ListCreateAPIView):
             'user': self.request.user,
         }
 
+    def get_serializer_class(self):
+        """Возвращает подходящий сериализатор
+        на основе версии запросов REST API.
+        """
+        if self.request.version == '2.0':
+            return ClientSerializerVer2
+        return ClientSerializer
+
 
 class MatchCreateDelete(APIView):
     authentication_classes = [BasicAuthentication]
     permission_classes = [IsAuthenticated]
 
-    def check_match(self, follower, person):
+    def check_match(self, current_user, person):
         """Метод проверяет наличие взаимных отметок участников
         и в положительном случае вызывает функцию send_mail_notify
         для формирования email-уведомлений обоим участникам.
         """
-        is_user_follower_to_person = Match.objects.filter(
-            person=person, follower=follower
-        ).exists()
         is_person_follower_to_user = Match.objects.filter(
-            person=follower, follower=person
+            person=current_user.id, follower=person['id']
         ).exists()
-        is_match_both_users = (
-            is_user_follower_to_person and is_person_follower_to_user
-        )
-        if is_match_both_users:
-            send_mail_notify(follower, person)
+        if is_person_follower_to_user:
+            send_mail_notify(current_user, person)
 
-    def get(self, request, person_id):
+    def post(self, request, person_id):
         follower = request.user
-        person = get_object_or_404(Client, id=person_id)
+        person = get_object_or_404(Client.objects.select_related().values(
+            'id', 'username', 'email'
+        ), id=person_id)
         data = {
             'follower': follower.id,
-            'person': person_id
+            'person': person['id']
         }
         serializer = ClientMatchSerializer(
             data=data,
