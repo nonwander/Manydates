@@ -1,0 +1,60 @@
+<!-- footer -->
+{% load static %}
+{% block extra_head %}
+  <link rel="stylesheet" href="{% static 'css/custom/footer.css' %}">
+{% endblock %}
+<div class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4 col-xs-12">
+        <div class="first">
+          <h4>By nonwander</h4>
+          <img src="{% static 'img/footer-prog.gif' %}" style="float: left; width: 100%;" alt="programmer">
+        </div>
+      </div>
+      <div class="col-md-4 col-xs-12">
+        <div class="second">
+          <h4> Navigate</h4>
+          <ul>
+            <li><i class="fa fa-home" aria-hidden="true"></i><a href="{% url 'index' %}"> Home</a></li>
+            <li><i class="fa fa-cogs" aria-hidden="true"></i><a href="{% url 'about:tech' %}"> Technologies</a></li>
+            <li><i class="fa fa-id-card" aria-hidden="true"></i><a href="{% url 'about:author' %}"> About</a></li>
+            <li><i class="fa fa-life-ring" aria-hidden="true"></i><a href="#"> Contact</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="col-md-4 col-xs-12">
+        <div class="third">
+          <h4> Contact</h4>
+          <ul>
+            <li><i class="far fa-user"></i> Nemykin Eugene</li>
+            <li></li>
+            <li><i class="far fa-envelope"></i> nonwander@gmail.com</li>
+            <li><i class="far fa-envelope"></i> nemykin.eu@ya.ru</li>
+            <li><i class="fas fa-map-marker-alt"></i> Belgorod, Russia</li>
+          </ul>
+        </div>
+      </div>
+    </div><!-- row end -->
+  </div><!-- container end -->
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="line"></div>
+        <small class="d-block mb-3 text-muted">
+          <ya-tr-span data-index="20-0" data-translated="false" data-source-lang="en" data-target-lang="ru"
+            data-value="MIT © year" data-translation="MIT © year" data-type="trSpan"><i class="far fa-copyright"></i>
+            {{ year }} MIT License
+          </ya-tr-span>
+        </small>
+        <div class="second2">
+          <a href="https://t.me/nonwander" target="_blank"><i class="fab fa-telegram fa-2x margin"></i></a>
+          <a href="https://github.com/nonwander" target="_blank"> <i class="fab fa-github fa-2x margin"></i></a>
+          <a href="https://www.linkedin.com/in/nonwander/" target="_blank"> <i
+              class="fab fa-linkedin fa-2x margin"></i></a>
+          <a href="Skype:ya_jo_jo?add" target="_blank"> <i class="fa fa-skype fa-2x margin"></i></a>
+        </div>
+      </div>
+    </div><!-- row end -->
+  </div><!-- container end -->
+</div>

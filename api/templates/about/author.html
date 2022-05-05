@@ -1,0 +1,72 @@
+<!-- /about/author -->
+{% extends "base.html" %}
+{% load static %}
+{% block extra_head %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/custom/author.css' %}">
+{% endblock %}
+{% block title %}About author{% endblock %}
+{% block content %}
+<div id="myCarousel" class="carousel slide carousel-fade" data-bs-ride="carousel">
+  <div class="carousel-inner">
+    <!-- Three pages -->
+    <!-- First page -->
+    <div class="carousel-item active">
+      <div class="mask flex-center">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-md-6 col-12 order-md-1 order-2">
+              <h5>THIS IS ME</h5><br>
+              <h3>Eugene Nemykin</h3>
+              <p>Back-End Python Developer</p><br>
+              <br><br><br><br>
+              <h5>BELGOROD - RUSSIA</h5>
+            </div>
+            <div class="col-md-6 col-12 order-md-2 order-1">
+              <div class="fade-in">
+                <img src="{% static 'img/about/about-ava_nobg.png' %}" class="mx-auto" alt="fade-in">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Second page -->
+    <div class="carousel-item">
+      <div class="mask flex-center">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-md-7 col-12 order-md-1 order-2">
+              <p>Programming <br>
+                is my passion!</p>
+              <br><br>
+              <h5>Let's make this world<br>a better place together!</h5>
+            </div>
+            <div class="col-md-5 col-12 order-md-2 order-1">
+              <div class="fade-in">
+                <img src="{% static 'img/about/about-earth_happy.gif' %}" class="mx-auto" alt="fade-in">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Third page -->
+    <div class="carousel-item">
+      <div class="mask flex-center">
+        <div class="container">
+          <div class="row align-items-center">
+            <div class="col-md-7 col-12 order-md-1 order-2">
+              <h4>Programming opens up new possibilities!</h4>
+            </div>
+            <div class="col-md-5 col-12 order-md-2 order-1">
+              <div class="fade-in">
+                <img src="{% static 'img/about/about-py.gif' %}" class="mx-auto" alt="fade-in">
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div><!-- carousel end -->
+{% endblock %}

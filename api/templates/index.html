@@ -1,0 +1,47 @@
+<!-- Homepage template -->
+{% extends "base.html" %}
+{% load static %}
+{% block extra_head %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/custom/index.css' %}">
+{% endblock %}
+{% block title %}Dating-site's Backend API{% endblock %}
+{% block header %}<div align="center">Frontend is not developed yet. Only Backend!</div>{% endblock %}
+{% block content %}
+  <div class="row" id="index-page">
+    <div class="col-left col-md-2">
+    </div>
+    <div class="col-center col-md-8">
+      <img src="{% static 'img/home-hw.gif' %}" style="float: top; width: 30%; margin-top: 0px; margin-bottom: 20px;" alt="HELLO WORLD!">
+      <h1 class="display-4 fw-normal">
+        <ya-tr-span data-index="1-0" data-translated="false" data-source-lang="en" data-target-lang="ru"
+          data-value="WELCOME" data-translation="ДОБРО ПОЖАЛОВАТЬ" data-type="trSpan" data-selected="false">
+          WELCOME
+        </ya-tr-span><br>
+        <ya-tr-span data-index="1-0" data-translated="false" data-source-lang="en" data-target-lang="ru"
+          data-value="to my Dating-site!" data-translation="на мой Сайт знакомств!" data-type="trSpan" data-selected="false">
+          to my Dating-site!
+        </ya-tr-span>
+      </h1><br>
+      <p class="lead fw-normal">
+        <ya-tr-span data-index="2-0" data-translated="false" data-source-lang="en" data-target-lang="ru"
+          data-value="Oh! There is no front for this site yet. "
+          data-translation="Ой! Фронт для этого сайта пока отсутствует." data-type="trSpan" data-selected="false">
+          Oh! There is no front for this site yet.
+        </ya-tr-span><br>
+        <ya-tr-span data-index="2-1" data-translated="false" data-source-lang="en" data-target-lang="ru"
+          data-value="Start testing the API using JSON queries, as in the documentation."
+          data-translation="Начните тестирование API с помощью JSON запросов, как в документации." data-type="trSpan"
+          data-selected="false">
+          Start testing the API using JSON queries, as in the documentation.
+        </ya-tr-span>
+      </p>
+      <a class="btn btn-outline-secondary" href="#" style="margin-top: 30px;">
+        <ya-tr-span data-index="3-0" data-translated="false" data-source-lang="en" data-target-lang="ru"
+          data-value="Start Test" data-translation="Тестируем" data-type="trSpan" data-selected="false">
+          Start Test</ya-tr-span>
+      </a>
+    </div>
+    <div class="col-right col-md-2">
+    </div>
+  </div>
+{% endblock %}

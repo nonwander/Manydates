@@ -1,0 +1,23 @@
+{% extends "base.html" %} 
+{% block title %} Error 404 {% endblock %}
+{% block content %}
+{% load static %}
+
+<main role="main" class="container">
+<div class="row">
+    <div class="col-md-12">
+        <img
+            src="{% static 'img/404_font.gif' %}"
+            style="float: right; 
+            width: 50%;"
+            alt="???"
+        >
+        <h1>ERROR 404</h1>
+        <p class="lead">Sorry! <code>{{ path }}</code>  could not be found.</p>
+        <p class="lead">The page you are looking for has been moved, deleted, renamed, or never existed.</p>
+        <p class="lead"><a href="{% url 'index' %}">Go back to homepage</a></p>
+    </div>
+</div>
+</main>
+
+{% endblock %}
