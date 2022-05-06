@@ -134,3 +134,8 @@ dmypy.json
 # Media and static files
 /media
 /static
+/backend_media
+/backend_static
+
+# Redis cache
+*.rdb
