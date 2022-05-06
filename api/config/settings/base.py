@@ -66,6 +66,21 @@ DATABASES = {
     }
 }
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': env('REDIS_URL'),
+        'OPTIONS': {
+            'CLIENT_CLASS': 'django_redis.client.DefaultClient',
+            'IGNORE_EXCEPTIONS': True,
+        },
+        'KEY_PREFIX': 'dating-site'
+    }
+}
+
+# Cache time to live is 15 minutes.
+CACHE_TTL = 60 * 15
+
 WSGI_APPLICATION = 'config.wsgi.application'
 
 AUTH_USER_MODEL = 'clients.Client'
