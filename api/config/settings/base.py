@@ -1,4 +1,5 @@
 from .env import *
+from .logging import *
 
 DJANGO_APPS = [
     'django.contrib.admin',

@@ -137,5 +137,9 @@ dmypy.json
 /backend_media
 /backend_static
 
+<<<<<<< HEAD
 # Redis dump files
+=======
+# Redis cache
+>>>>>>> develop/logging
 *.rdb
