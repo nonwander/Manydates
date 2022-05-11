@@ -7,11 +7,11 @@ from .utils import set_watermark_full_filling
 
 
 class Client(AbstractUser):
-    CLIENT_GENDER = (
+    CLIENT_GENDER = {
         ('M', 'Мужчина'),
         ('F', 'Женщина'),
         ('U', 'Не указан')
-    )
+    }
     gender = models.CharField(
         max_length=1,
         choices=CLIENT_GENDER,
@@ -19,10 +19,10 @@ class Client(AbstractUser):
         default='U'
     )
     avatar = models.ImageField(upload_to='clients/', blank=True)
-    username = models.CharField('client_name', max_length=150, unique=True)
-    first_name = models.TextField('first_name', max_length=30)
-    last_name = models.TextField('last_name', max_length=150)
-    password = models.CharField('password', max_length=150)
+    username = models.CharField('client_name', max_length=250, unique=True)
+    first_name = models.TextField('first_name', max_length=230)
+    last_name = models.TextField('last_name', max_length=250)
+    password = models.CharField('password', max_length=250)
     email = models.EmailField('e-mail', max_length=254, unique=True)
     location = PointField(
         geography=True,
