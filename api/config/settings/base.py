@@ -1,4 +1,5 @@
 from .env import *
+from .security import *
 from .logging import *
 
 DJANGO_APPS = [
@@ -11,6 +12,7 @@ DJANGO_APPS = [
 ]
 
 THIRD_PARTY_APPS = [
+    'corsheaders',
     'rest_framework',
     'django_filters',
     'django_generate_secret_key',
@@ -29,6 +31,7 @@ INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -147,3 +150,9 @@ REST_FRAMEWORK = {
 }
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
+
+CORS_ORIGIN_ALLOW_ALL = True  # False  # !also uncomment next 3 lines
+# CORS_ORIGIN_WHITELIST = (
+#        'localhost: 3000',  # URL для клиентской части 
+# )
+CORS_URLS_REGEX = r'^/api/.*$'
