@@ -7,4 +7,5 @@ export SERVER_HOST=XXX
 python ./api/manage.py makemigrations
 python ./api/manage.py migrate
 python ./api/manage.py collectstatic
+#python ./api/manage.py dummy_data_maker
 python ./api/manage.py runserver --noreload --insecure
