@@ -1,0 +1,51 @@
+version: '3.8'
+
+volumes:
+  postgres_data:
+  static_value:
+  media_value:
+
+services:
+  db:
+    image: postgis/postgis
+    restart: always
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file:
+      - .envs/.env.db
+    ports:
+      - 5432:5432
+
+  redis:
+    image: redis:alpine
+
+  web:
+    build:
+      context: ./
+      dockerfile: ./compose/local/Dockerfile.local
+
+    volumes:
+      - static_value:/code/backend_static/
+      - media_value:/code/backend_media/
+    expose:
+      - 8000
+    depends_on:
+      - db
+      - redis
+    env_file:
+      - .envs/.env.local
+      - .envs/.env.db
+    command: ./compose/prod/run_local.sh
+
+  nginx:
+    build:
+      context: ./
+      dockerfile: ./compose/nginx/Dockerfile
+    ports:
+      - 80:80
+    volumes:
+      - static_value:/var/html/static/
+      - media_value:/var/html/media/
+      - ./README.md:/usr/share/nginx/html/docs/README.md
+    depends_on:
+      - web

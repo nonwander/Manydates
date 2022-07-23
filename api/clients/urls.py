@@ -4,9 +4,11 @@ from django.urls import path
 from django.views.decorators.cache import cache_page
 
 
-from clients.views import ClientCreate, ClientList, MatchCreateDelete
+from api.clients.views import ClientCreate, ClientList, MatchCreateDelete
 
 CACHE_TTL = getattr(settings, 'CACHE_TTL', DEFAULT_TIMEOUT)
+
+app_name = 'api.clients'
 
 urlpatterns = [
     path('clients/', ClientCreate.as_view()),

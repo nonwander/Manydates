@@ -1,0 +1,14 @@
+.editorconfig
+.gitattributes
+.github
+.gitignore
+.gitlab-ci.yml
+.pre-commit-config.yaml
+.readthedocs.yml
+.travis.yml
+.vscode
+backend_media
+backend_static
+dumps
+logs
+venv

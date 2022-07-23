@@ -1,0 +1,56 @@
+<!-- About product template -->
+{% extends "base.html" %}
+{% load static %}
+{% block extra_head %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/custom/tech.css' %}">
+  <script
+    type="module"
+    src="https://cdn.jsdelivr.net/gh/zerodevx/zero-md@2/dist/zero-md.min.js"
+  ></script>
+{% endblock %}
+{% block title %}Dating-site's Backend API{% endblock %}
+{% block header %}<div align="center">Frontend is not developed yet. Only Backend!</div>{% endblock %}
+{% block content %}
+<main role="main" class="container">
+  <div class="row">
+    <!-- list of project's navigation -->
+    <div class="col-md-3 col-12 mb-0 mt-2">
+      <div class="card">
+        <div class="card-body">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              <div class="h2">
+                NAVIGATION
+              </div>
+            </li>
+            <li class="list-group-item">
+              <div class="h4 text-muted">
+                Концепция<br />Краткое описание<br />Перспективные доработки<br />Технологии
+                <br />Запуск и работа<br />Ресурсы<br />Примеры запросов<br />Автор
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- README import -->
+    <div class="col-md-9 col-12 mb-0 mt-2">
+      <div class="card-body">
+        <div class="card-text">
+          <img src="{% static 'img/git_readme.jpg' %}"
+            style="float: center; width: 100%;"
+            alt="Zen of python">
+          <code>
+            <h4><font color='#ff4800'>&gt;&gt;&gt; </font><font color='#198754'>import </font><font color='#0d6efd'>README</font></h4>
+          </code>
+          <div class="highlight">
+            <pre class="highlight plaintext">
+              <zero-md src="/README.md"></zero-md>
+            </pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}

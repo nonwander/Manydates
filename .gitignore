@@ -56,6 +56,7 @@ coverage.xml
 *.pot
 
 # Django stuff:
+logs
 *.log
 local_settings.py
 db.sqlite3
@@ -102,7 +103,9 @@ celerybeat.pid
 *.sage.py
 
 # Environments
-.env
+.env.prod
+.env.local
+.env.db
 .venv
 env/
 venv/
@@ -137,9 +140,5 @@ dmypy.json
 /backend_media
 /backend_static
 
-<<<<<<< HEAD
 # Redis dump files
-=======
-# Redis cache
->>>>>>> develop/logging
 *.rdb

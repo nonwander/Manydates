@@ -1,0 +1,250 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "Dating-Site API",
+    "description": "API documentation for Dating-Site",
+    "contact": {
+      "email": "servgram@mail.ru"
+    },
+    "license": {
+      "name": "MIT License"
+    },
+    "version": "v1"
+  },
+  "host": "web:8000",
+  "schemes": [
+    "http"
+  ],
+  "basePath": "/api",
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "securityDefinitions": {
+    "Basic": {
+      "type": "basic"
+    }
+  },
+  "security": [
+    {
+      "Basic": []
+    }
+  ],
+  "paths": {
+    "/clients/": {
+      "post": {
+        "operationId": "clients_create",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Client"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Client"
+            }
+          }
+        },
+        "tags": [
+          "clients"
+        ]
+      },
+      "parameters": []
+    },
+    "/clients/list/": {
+      "get": {
+        "operationId": "clients_list_list",
+        "description": "",
+        "parameters": [
+          {
+            "name": "gender",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "first_name",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "last_name",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "get_in_distance_km",
+            "in": "query",
+            "description": "",
+            "required": false,
+            "type": "number"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Client"
+              }
+            }
+          }
+        },
+        "tags": [
+          "clients"
+        ]
+      },
+      "post": {
+        "operationId": "clients_list_create",
+        "description": "",
+        "parameters": [
+          {
+            "name": "data",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/Client"
+            }
+          }
+        ],
+        "responses": {
+          "201": {
+            "description": "",
+            "schema": {
+              "$ref": "#/definitions/Client"
+            }
+          }
+        },
+        "tags": [
+          "clients"
+        ]
+      },
+      "parameters": []
+    },
+    "/clients/{person_id}/match/": {
+      "post": {
+        "operationId": "clients_match_create",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "201": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "clients"
+        ]
+      },
+      "delete": {
+        "operationId": "clients_match_delete",
+        "description": "",
+        "parameters": [],
+        "responses": {
+          "204": {
+            "description": ""
+          }
+        },
+        "tags": [
+          "clients"
+        ]
+      },
+      "parameters": [
+        {
+          "name": "person_id",
+          "in": "path",
+          "required": true,
+          "type": "string"
+        }
+      ]
+    }
+  },
+  "definitions": {
+    "Client": {
+      "required": [
+        "username",
+        "email",
+        "first_name",
+        "password",
+        "last_name"
+      ],
+      "type": "object",
+      "properties": {
+        "id": {
+          "title": "ID",
+          "type": "integer",
+          "readOnly": true
+        },
+        "username": {
+          "title": "Username",
+          "type": "string",
+          "minLength": 1
+        },
+        "email": {
+          "title": "E-mail",
+          "type": "string",
+          "format": "email",
+          "maxLength": 254,
+          "minLength": 1
+        },
+        "first_name": {
+          "title": "First_name",
+          "type": "string",
+          "maxLength": 230,
+          "minLength": 1
+        },
+        "password": {
+          "title": "Password",
+          "type": "string",
+          "maxLength": 250,
+          "minLength": 1
+        },
+        "last_name": {
+          "title": "Last_name",
+          "type": "string",
+          "maxLength": 250,
+          "minLength": 1
+        },
+        "avatar": {
+          "title": "Avatar",
+          "type": "string",
+          "readOnly": true,
+          "format": "uri"
+        },
+        "gender": {
+          "title": "Gender",
+          "type": "string",
+          "enum": [
+            "F",
+            "M",
+            "U"
+          ]
+        },
+        "is_match": {
+          "title": "Is match",
+          "type": "string",
+          "readOnly": true
+        },
+        "location": {
+          "title": "Location",
+          "type": "string"
+        }
+      }
+    }
+  }
+}

@@ -20,7 +20,7 @@ class ClientCreate(generics.CreateAPIView):
     permission_classes = [AllowAny]
 
 
-class ClientList(generics.ListCreateAPIView):
+class ClientList(generics.ListAPIView):
     permission_classes = [IsAuthenticated]
     filter_backends = [CustomFilterBackend]
     filter_class = ClientListFilter
