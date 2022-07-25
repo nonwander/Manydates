@@ -1,7 +1,8 @@
 # Dating-Site-API
 
 API-сервис для сайта знакомств.
-</br>Хост развернутого проекта: https://manydates.ml
+</br>Хост развернутого проекта: http://2.57.187.13/
+ - скоро будет доступен на https://manydates.ml
 <hr><br>
 
 # Концепция
@@ -89,19 +90,13 @@ python manage.py dummy_data_maker
 
 ## На сервисе доступны эндпоинты:
 1) Регистрация нового клиента:
-</br><code>
-    /api/clients/create/
-</code>
+```/api/clients/create/```
 
 2) Оценивание участником другого участника: 
-</br><code>
-    /api/clients/{client_id}/match/
-</code>
+```/api/clients/{client_id}/match/```
 
 3) Просмотр списка участников:
-</br><code>
-    /api/list/
-</code>
+```/api/list/```
 
 ## Фильтрация списка 
 Фильтрацию списка можно произвести по полу, имени, фамилии,
@@ -134,9 +129,8 @@ python manage.py dummy_data_maker
 Запросы к API начинаются с «/api/»
 1. Регистрация участника:
 <br>**POST**-запрос:
-<br><code>
-    /clients/create/
-</code>
+<br>```/clients/create/```
+
 <br /> *Request sample:*
 ```python
 {
@@ -180,9 +174,8 @@ python manage.py dummy_data_maker
 
 2. Создание отметки у участника:
 <br>**GET**-запрос:
-<br><code>
-/clients/2/match/
-</code>
+<br>```/clients/2/match/```
+
 <br /> *Response sample: (200)*
 ```python
 {
@@ -193,9 +186,8 @@ python manage.py dummy_data_maker
 
 3. Удаление отметки у участника:
 <br>**DELETE**-запрос:
-<br><code>
-    /clients/2/match/
-</code>
+<br>```/clients/2/match/```
+
 <br /> *Response sample: (204)*
 ```python
 <no content>
@@ -203,9 +195,8 @@ python manage.py dummy_data_maker
 
 4. Фильтр по списку участников:
 <br>**GET**-запрос:
-<br><code>
-    /list/?gender=М&first_name=man0&last_name=man0
-</code>
+<br>```/list/?gender=М&first_name=man0&last_name=man0```
+
 <br /> *Response sample: (200)*
 ```python
 [
